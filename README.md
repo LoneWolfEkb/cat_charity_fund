@@ -24,7 +24,7 @@ uvicorn app.main:app --reload
 ```
 При первом запуске приложения будет создан суперюзер, с регистрационными данными из `.env`  
 
-Документация и web интервейс API будет доступен по адресу: http://localhost:8000/docs
+Документация и web интервейс API будет доступен по адресу: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## Автор
-- Турхан Михаил
+- [Турхан Михаил](https://github.com/LoneWolfEkb)

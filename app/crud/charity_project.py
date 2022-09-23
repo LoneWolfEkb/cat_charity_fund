@@ -8,9 +8,10 @@ from app.models.charity_project import CharityProject
 
 
 class CRUDCharityProject(CRUDBase):
-
+    
+    @staticmethod
     async def get_project_id_by_name(
-            self, name: str, session: AsyncSession) -> Optional[int]:
+            name: str, session: AsyncSession) -> Optional[int]:
         db_project_id = await session.execute(
             select(CharityProject.id).where(CharityProject.name == name))
         return db_project_id.scalars().first()

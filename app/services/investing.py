@@ -25,8 +25,8 @@ async def investing(session: AsyncSession):
         projects[project_n].invested_amount += free_for_investing
         if (donations[donation_n].full_amount ==
                 donations[donation_n].invested_amount):
-            setattr(donations[donation_n], 'fully_invested', True)
-            setattr(donations[donation_n], 'close_date', datetime.now())
+            donations[donation_n].fully_invested = True
+            donations[donation_n].close_date = datetime.now()
             donation_n += 1
         if (projects[project_n].full_amount ==
                 projects[project_n].invested_amount):

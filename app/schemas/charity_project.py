@@ -22,8 +22,7 @@ class CharityProjectUpdate(CharityProjectBase):
     description: Optional[str]
     full_amount: Optional[PositiveInt] = Field(example=100)
 
-    class Config:
-        min_anystr_length = 1
+    class Config(CharityProjectBase.Config):
         extra = Extra.forbid
 
 
