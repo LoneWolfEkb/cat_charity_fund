@@ -14,6 +14,7 @@ SUM_TOO_SMALL = 'Нельзя установить требуемую сумму
 PROJECT_CLOSED = 'Закрытый проект нельзя редактировать!'
 NO_DELETE = 'В проект были внесены средства, не подлежит удалению!'
 
+
 async def check_name_duplicate(
         project_name: str, session: AsyncSession) -> None:
     project_id = await project_crud.get_project_id_by_name(
