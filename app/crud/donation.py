@@ -20,7 +20,7 @@ class CRUDDonation(CRUDBase):
     @staticmethod
     async def get_donations(session: AsyncSession):
         donations = await session.execute( 
-            select(Donation).where(~Donation.fully_invested)) 
+        select(Donation).where(~Donation.fully_invested)) 
         return donations.scalars().all()
 
 donation_crud = CRUDDonation(Donation)
