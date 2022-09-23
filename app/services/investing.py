@@ -3,13 +3,14 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import charity_project_crud, donation_crud
-from app.models import CharityProject, Donation
+from app.crud.donation import donation_crud
+from app.crud.charity_project import project_crud
+#from app.models import CharityProject, Donation
 
 
 async def investing(session: AsyncSession):
     donations = donation_crud.get_donations(session=session)
-    projects = charity_project_crud.get_projects(session=session)
+    projects = project_crud.get_projects(session=session)
     donation_n = 0
     project_n = 0
     while donation_n < len(donations) and project_n < len(projects):
