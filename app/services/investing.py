@@ -3,13 +3,12 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.crud import charity_project_crud, donation_crud
 from app.models import CharityProject, Donation
 
 
 async def investing(session: AsyncSession):
-    donations = await session.execute(
-        select(Donation).where(~Donation.fully_invested))
-    donations = donations.scalars().all()
+    donations = donation_crud.get_donations(session=session)
     projects = await session.execute(
         select(CharityProject).where(~CharityProject.fully_invested))
     projects = projects.scalars().all()
