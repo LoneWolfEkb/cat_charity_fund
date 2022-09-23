@@ -1,0 +1,6 @@
+APP_TITLE=Кошачий благотворительный фонд
+APP_DESCRIPTION=Сервис для поддержки котиков!
+DATABASE_URL=sqlite+aiosqlite:///./fastapi.db
+SECRET=ddfhnykituhjfdhgduyrfukjgkjfhdfjk
+FIRST_SUPERUSER_EMAIL=a@aa.aa
+FIRST_SUPERUSER_PASSWORD=password
