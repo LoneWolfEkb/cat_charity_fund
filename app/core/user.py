@@ -14,7 +14,7 @@ from app.models.user import User
 from app.schemas.user import UserCreate
 
 USER_REGISTERED = 'Пользователь {user} зарегистрирован.'
-THREE_CHARACTERS = 'Пароль должен содержать по крайней мере 3 символа'
+THREE_CHARACTERS = 'Password should be at least 3 characters'
 PASSWORD_NO_EMAIL = 'Пароль не должен содержать e-mail'
 
 
