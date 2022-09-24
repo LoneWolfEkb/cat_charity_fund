@@ -28,8 +28,6 @@ class CRUDBase:
             obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
-        await session.commit()
-        await session.refresh(db_obj)
         return db_obj
 
     async def update(self, db_obj, obj_in, session: AsyncSession):
@@ -39,8 +37,6 @@ class CRUDBase:
             if field in update_data:
                 setattr(db_obj, field, update_data[field])
         session.add(db_obj)
-        await session.commit()
-        await session.refresh(db_obj)
         return db_obj
 
     async def remove(self, db_obj, session: AsyncSession):
