@@ -20,7 +20,7 @@ class CRUDCharityProject(CRUDBase):
     async def get_projects_to_elaborate(session: AsyncSession):
         projects = await session.execute(
             select(CharityProject).
-            where(CharityProject.fully_invested == False)
+            where(CharityProject.fully_invested == False)  # noqa
             .order_by(CharityProject.create_date))  # noqa
         return projects.scalars().all()
 
