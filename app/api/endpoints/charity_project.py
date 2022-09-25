@@ -28,6 +28,8 @@ async def create_charity_project(
     await check_name_duplicate(project.name, session)
     project = await project_crud.create(obj_in=project, session=session, commit=False)
     await project_investing(session=session, project=project)
+    await session.commit()
+    await session.refresh(project)
     return project
 
 
@@ -53,6 +55,8 @@ async def partially_update_project(
     await check_name_duplicate(obj_in.name, session)
     updated_project = await project_crud.update(db_obj=project, obj_in=obj_in, session=session, commit=False)
     await project_investing(session=session, project=updated_project)
+    await session.commit()
+    await session.refresh(project)
     return project
 
 
