@@ -20,13 +20,13 @@ async def create_donation(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)):
     '''Сделать пожертвование.'''
-    donation = await donation_crud.create(obj_in = donation, session=session, user= user, commit = False)
+    donation = await donation_crud.create(obj_in=donation, session=session, user=user, commit=False)
     await donation_investing(session=session, donation=donation)
     return donation
 
 
 @router.get(
-    '/', response_model= List[DonationAdminDB],
+    '/', response_model=List[DonationAdminDB],
     response_model_exclude_none=True,
     dependencies=[Depends(current_superuser)])
 async def get_all_donations(
@@ -36,7 +36,7 @@ async def get_all_donations(
     return await donation_crud.get_multi(session)
 
 
-@router.get('/my', response_model= List[DonationDB])
+@router.get('/my', response_model=List[DonationDB])
 async def get_user_donations(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)):
