@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
 
 from app.core.db import get_async_session
 from app.core.user import current_superuser, current_user
 from app.crud.donation import donation_crud
 from app.models import User
 from app.schemas.donation import DonationAdminDB, DonationCreate, DonationDB
-from app.services.investing import investing
+from app.services.investing import donation_investing
 
 router = APIRouter()
 
@@ -19,14 +20,13 @@ async def create_donation(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)):
     '''Сделать пожертвование.'''
-    donation = await donation_crud.create(donation, session, user)
-    await investing(session)
-    await session.refresh(donation)
+    donation = await donation_crud.create(obj_in = donation, session=session, user= user, commit = False)
+    await donation_investing(session=session, donation=donation)
     return donation
 
 
 @router.get(
-    '/', response_model=list[DonationAdminDB],
+    '/', response_model= List[DonationAdminDB],
     response_model_exclude_none=True,
     dependencies=[Depends(current_superuser)])
 async def get_all_donations(
@@ -36,7 +36,7 @@ async def get_all_donations(
     return await donation_crud.get_multi(session)
 
 
-@router.get('/my', response_model=list[DonationDB])
+@router.get('/my', response_model= List[DonationDB])
 async def get_user_donations(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)):
