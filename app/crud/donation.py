@@ -20,7 +20,8 @@ class CRUDDonation(CRUDBase):
     @staticmethod
     async def get_donations_to_elaborate(session: AsyncSession):
         donations = await session.execute(
-            select(Donation).where(Donation.fully_invested == False).order_by(Donation.create_date))  # noqa
+            select(Donation).where(Donation.fully_invested == False).\
+            order_by(Donation.create_date))  # noqa
         return donations.scalars().all()
 
 

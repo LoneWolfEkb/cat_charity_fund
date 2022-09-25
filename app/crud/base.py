@@ -22,7 +22,10 @@ class CRUDBase:
         return db_objs.scalars().all()
 
     async def create(
-            self, obj_in, session: AsyncSession, commit: Optional[bool] = True, user: Optional[User] = None):
+            self, obj_in, session:
+            AsyncSession,
+            commit: bool = True,
+            user: Optional[User] = None):
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data['user_id'] = user.id
@@ -33,7 +36,9 @@ class CRUDBase:
             await session.refresh(db_obj)
         return db_obj
 
-    async def update(self, db_obj, obj_in, session: AsyncSession, commit: Optional[bool] = True):
+    async def update(self, db_obj, obj_in,
+                     session: AsyncSession,
+                     commit: Optional[bool] = True):
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
         for field in obj_data:
