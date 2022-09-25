@@ -38,7 +38,7 @@ class CRUDBase:
 
     async def update(self, db_obj, obj_in,
                      session: AsyncSession,
-                     commit: Optional[bool] = True):
+                     commit: bool = True):
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
         for field in obj_data:

@@ -19,8 +19,8 @@ class CRUDCharityProject(CRUDBase):
     @staticmethod
     async def get_projects_to_elaborate(session: AsyncSession):
         projects = await session.execute(
-            select(CharityProject).\
-            where(CharityProject.fully_invested == False)\
+            select(CharityProject).
+            where(CharityProject.fully_invested == False)
             .order_by(CharityProject.create_date))  # noqa
         return projects.scalars().all()
 
