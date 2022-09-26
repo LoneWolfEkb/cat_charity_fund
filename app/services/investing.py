@@ -40,9 +40,9 @@ async def donation_investing(
     projects = await project_crud.get_projects_to_elaborate(session=session)
     projects_elaborated = []
     for project in projects:
-        projects_elaborated.append(project)
         if await investing(donation=donation, project=project):
             break
+        projects_elaborated.append(project)
     return projects_elaborated
 
 
@@ -52,7 +52,7 @@ async def project_investing(
     donations = await donation_crud.get_donations_to_elaborate(session=session)
     donations_elaborated = []
     for donation in donations:
-        donations_elaborated.append(donation)
         if await investing(donation=donation, project=project):
             break
+        donations_elaborated.append(donation)
     return donations_elaborated
