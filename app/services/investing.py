@@ -35,8 +35,9 @@ async def investing(donation: DonationAdminDB,
 
 
 async def donation_investing(
-    session: AsyncSession,
-    donation: DonationAdminDB) -> List[CharityProjectDB]:
+        session: AsyncSession,
+        donation: DonationAdminDB
+    ) -> List[CharityProjectDB]:
     projects = await project_crud.get_projects_to_elaborate(session=session)
     projects_elaborated = []
     for project in projects:
@@ -47,8 +48,9 @@ async def donation_investing(
 
 
 async def project_investing(
-    session: AsyncSession,
-    project: CharityProjectDB) -> List[DonationAdminDB]:
+        session: AsyncSession,
+        project: CharityProjectDB
+    ) -> List[DonationAdminDB]:
     donations = await donation_crud.get_donations_to_elaborate(session=session)
     donations_elaborated = []
     for donation in donations:
