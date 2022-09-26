@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Union
+from typing import Union, List
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,13 +9,15 @@ from app.schemas.charity_project import CharityProjectDB
 from app.schemas.donation import DonationAdminDB
 
 
-async def fully_invested(obj: Union[CharityProjectDB, DonationAdminDB]) -> None:
+async def fully_invested(obj: Union[CharityProjectDB,
+                         DonationAdminDB]) -> None:
     obj.fully_invested = True
     obj.invested_amount = obj.full_amount
     obj.close_date = datetime.now()
 
 
-async def investing(donation: DonationAdminDB, project: CharityProjectDB) -> bool:
+async def investing(donation: DonationAdminDB,
+                    project: CharityProjectDB) -> bool:
     if donation.fully_invested or project.fully_invested:
         return True
 
@@ -32,15 +34,22 @@ async def investing(donation: DonationAdminDB, project: CharityProjectDB) -> boo
         await fully_invested(project)
 
 
-async def donation_investing(session: AsyncSession, donation: DonationAdminDB) -> None:
+async def donation_investing(session: AsyncSession,
+                             donation: DonationAdminDB) ->\
+                             List[CharityProjectDB]:
     projects = await project_crud.get_projects_to_elaborate(session=session)
     for project in projects:
         if await investing(donation=donation, project=project):
             break
+    return projects
 
 
-async def project_investing(session: AsyncSession, project: CharityProjectDB) -> None:
-    donations = await donation_crud.get_donations_to_elaborate(session=session)
+async def project_investing(session: AsyncSession,
+                            project: CharityProjectDB) ->\
+                            List[DonationAdminDB]:
+    donations = await donation_crud.get_donations_to_elaborate(session=
+                                                               session)
     for donation in donations:
         if await investing(donation=donation, project=project):
             break
+    return donations
